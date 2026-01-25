@@ -1,0 +1,4 @@
+# Without AI Foundations library ! 
+# python 3.11 (because of tensorflow)
+ipykernel
+pandas
