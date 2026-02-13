@@ -47,6 +47,16 @@ class NGramModel:
         predicted_token = random.choices(list(next_token_probs.keys()), weights=next_token_probs.values(), k=1)[0]
         return predicted_token
     
+    def return_probabilities(self, context, k=10):
+        # First take only last n-1 tokens from the context
+        context_tokens = context.split(" ")
+        context = " ".join(context_tokens[-(self.n-1):])
+        if context not in self.ngram_model:
+            return "Context not found in model."  # No predictions available for this context
+        next_token_probs = self.ngram_model[context]
+        sorted_tokens = sorted(next_token_probs.items(), key=lambda item: item[1], reverse=True)[:k]
+        return sorted_tokens
+    
     def generate_text(self, start_context, max_new_tokens):
         context = start_context.split(" ")[-self.n+1:]  # Get the last n-1 tokens from the start context
         context = " ".join(context)
